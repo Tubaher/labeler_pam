@@ -56,7 +56,7 @@ while True:
         break
     # Folder name was filled in, make a list of files in the folder
     if event == "-CSV-":
-        df = pd.read_csv ('calc_case_description_test_set_simple.csv')
+        df = pd.read_csv (values['-CSV-'])
         if n_row <= 0:
             window['BACK'].update(disabled=True)
         elif n_row > 0 and n_row < (df.shape[0] -1):
