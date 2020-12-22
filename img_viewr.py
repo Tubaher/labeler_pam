@@ -74,15 +74,15 @@ while True:
         window['-MASK-'].update(row[3])
 
         try:
-            window["-IMAGE-"].update(filename=row[1])
+            window["-IMAGE-"].update(filename=row[1], size=(100,100))
         except:
             pass
         try:    
-            window["-CROP_IMG-"].update(filename=row[2])
+            window["-CROP_IMG-"].update(filename=row[2], size=(100,100))
         except:
             pass    
         try:    
-            window["-MASK_IMG-"].update(filename=row[3])
+            window["-MASK_IMG-"].update(filename=row[3], size=(100,100))
         except:
             pass
 
@@ -111,15 +111,15 @@ while True:
         window['-MASK-'].update(row[3])
 
         try:
-            window["-IMAGE-"].update(filename=row[1])
+            window["-IMAGE-"].update(filename=row[1], size=(100,100))
         except:
             pass
         try:    
-            window["-CROP_IMG-"].update(filename=row[2])
+            window["-CROP_IMG-"].update(filename=row[2], size=(100,100))
         except:
             pass    
         try:    
-            window["-MASK_IMG-"].update(filename=row[3])
+            window["-MASK_IMG-"].update(filename=row[3], size=(100,100))
         except:
             pass
 
@@ -148,15 +148,15 @@ while True:
         window['-MASK-'].update(row[3])
 
         try:
-            window["-IMAGE-"].update(filename=row[1])
+            window["-IMAGE-"].update(filename=row[1], size=(100,100))
         except:
             pass
         try:    
-            window["-CROP_IMG-"].update(filename=row[2])
+            window["-CROP_IMG-"].update(filename=row[2], size=(100,100))
         except:
             pass    
         try:    
-            window["-MASK_IMG-"].update(filename=row[3])
+            window["-MASK_IMG-"].update(filename=row[3], size=(100,100))
         except:
             pass
     
