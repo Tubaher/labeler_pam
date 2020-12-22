@@ -4,11 +4,18 @@ import PySimpleGUI as sg
 import os.path
 import csv
 import pandas as pd
+import cv2
 # First the window layout in 2 columns
+
+SIZE_CROP = (200,200)
+SIZE_MASK = (300,450)
+SIZE_ORIGINAL = (300,450)
+
+NAME_DATASET = 'CBIS-DDSM/'
 
 file_list_column = [
     [sg.Text("Choose CSV: "), sg.In(size=(170, 1), enable_events=True, key="-CSV-"), sg.FileBrowse()],
-    [sg.Text("Class: "), sg.In(size=(170, 1), enable_events=True, key="-CLASS-")],
+    [sg.Text("Class: "), sg.In(size=(170, 1), enable_events=True, key="-CLASS-"), sg.Button("UPDATE")],
     [sg.Text("Images: "), sg.In(size=(170, 1), enable_events=True, key="-IMAGE_PATH-"), sg.Button("NEXT")],
     [sg.Text("Crops: "), sg.In(size=(170, 1), enable_events=True, key="-CROP-"), sg.Button("BACK")],
     [sg.Text("Masks: "), sg.In(size=(170, 1), enable_events=True, key="-MASK-"), sg.Button("SAVE")],
@@ -74,15 +81,25 @@ while True:
         window['-MASK-'].update(row[3])
 
         try:
-            window["-IMAGE-"].update(filename=row[1], size=(100,100))
+            img = cv2.imread(NAME_DATASET + row[1])
+            img = cv2.resize(img, SIZE_ORIGINAL)
+            imgbytes = cv2.imencode('.png', img)[1].tobytes()  # ditto
+            window["-IMAGE-"].update(data=imgbytes)
+            #window["-IMAGE-"].update(filename=row[1], size=(100,100))
         except:
             pass
-        try:    
-            window["-CROP_IMG-"].update(filename=row[2], size=(100,100))
+        try:
+            img = cv2.imread(NAME_DATASET + row[2])
+            img = cv2.resize(img, SIZE_CROP)
+            imgbytes = cv2.imencode('.png', img)[1].tobytes()  # ditto    
+            window["-CROP_IMG-"].update(data=imgbytes)
         except:
             pass    
         try:    
-            window["-MASK_IMG-"].update(filename=row[3], size=(100,100))
+            img = cv2.imread(NAME_DATASET + row[3])
+            img = cv2.resize(img, SIZE_MASK)
+            imgbytes = cv2.imencode('.png', img)[1].tobytes()  # ditto 
+            window["-MASK_IMG-"].update(data=imgbytes)
         except:
             pass
 
@@ -111,15 +128,25 @@ while True:
         window['-MASK-'].update(row[3])
 
         try:
-            window["-IMAGE-"].update(filename=row[1], size=(100,100))
+            img = cv2.imread(NAME_DATASET + row[1])
+            img = cv2.resize(img, SIZE_ORIGINAL)
+            imgbytes = cv2.imencode('.png', img)[1].tobytes()  # ditto
+            window["-IMAGE-"].update(data=imgbytes)
+            #window["-IMAGE-"].update(filename=row[1], size=(100,100))
         except:
             pass
-        try:    
-            window["-CROP_IMG-"].update(filename=row[2], size=(100,100))
+        try:
+            img = cv2.imread(NAME_DATASET + row[2])
+            img = cv2.resize(img, SIZE_CROP)
+            imgbytes = cv2.imencode('.png', img)[1].tobytes()  # ditto    
+            window["-CROP_IMG-"].update(data=imgbytes)
         except:
             pass    
         try:    
-            window["-MASK_IMG-"].update(filename=row[3], size=(100,100))
+            img = cv2.imread(NAME_DATASET + row[3])
+            img = cv2.resize(img, SIZE_MASK)
+            imgbytes = cv2.imencode('.png', img)[1].tobytes()  # ditto 
+            window["-MASK_IMG-"].update(data=imgbytes)
         except:
             pass
 
@@ -148,15 +175,25 @@ while True:
         window['-MASK-'].update(row[3])
 
         try:
-            window["-IMAGE-"].update(filename=row[1], size=(100,100))
+            img = cv2.imread(NAME_DATASET + row[1])
+            img = cv2.resize(img, SIZE_ORIGINAL)
+            imgbytes = cv2.imencode('.png', img)[1].tobytes()  # ditto
+            window["-IMAGE-"].update(data=imgbytes)
+            #window["-IMAGE-"].update(filename=row[1], size=(100,100))
         except:
             pass
-        try:    
-            window["-CROP_IMG-"].update(filename=row[2], size=(100,100))
+        try:
+            img = cv2.imread(NAME_DATASET + row[2])
+            img = cv2.resize(img, SIZE_CROP)
+            imgbytes = cv2.imencode('.png', img)[1].tobytes()  # ditto    
+            window["-CROP_IMG-"].update(data=imgbytes)
         except:
             pass    
         try:    
-            window["-MASK_IMG-"].update(filename=row[3], size=(100,100))
+            img = cv2.imread(NAME_DATASET + row[3])
+            img = cv2.resize(img, SIZE_MASK)
+            imgbytes = cv2.imencode('.png', img)[1].tobytes()  # ditto 
+            window["-MASK_IMG-"].update(data=imgbytes)
         except:
             pass
     
@@ -174,7 +211,33 @@ while True:
         row[1] = values['-IMAGE_PATH-']
         row[2] = values['-CROP-']
         row[3] = values['-MASK-']
-        df.to_csv('./test.csv', index=False)
+        df.to_csv(values['-CSV-'].split(".")[0] + "_correct.csv", index=False)
+
+    elif event == 'UPDATE':
+
+        try:
+            img = cv2.imread(NAME_DATASET + values['-IMAGE_PATH-'])
+            img = cv2.resize(img, SIZE_ORIGINAL)
+            imgbytes = cv2.imencode('.png', img)[1].tobytes()  # ditto
+            window["-IMAGE-"].update(data=imgbytes)
+            #window["-IMAGE-"].update(filename=row[1], size=(100,100))
+        except:
+            pass
+        try:
+            img = cv2.imread(NAME_DATASET + values['-CROP-'])
+            img = cv2.resize(img, SIZE_CROP)
+            imgbytes = cv2.imencode('.png', img)[1].tobytes()  # ditto    
+            window["-CROP_IMG-"].update(data=imgbytes)
+        except:
+            pass    
+        try:    
+            img = cv2.imread(NAME_DATASET + values['-MASK-'])
+            img = cv2.resize(img, SIZE_MASK)
+            imgbytes = cv2.imencode('.png', img)[1].tobytes()  # ditto 
+            window["-MASK_IMG-"].update(data=imgbytes)
+        except:
+            pass
+
 
 
         # window["-FILE LIST-"].update(fnames)
