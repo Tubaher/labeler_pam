@@ -11,7 +11,7 @@ file_list_column = [
     [sg.Text("Class: "), sg.In(size=(170, 1), enable_events=True, key="-CLASS-")],
     [sg.Text("Images: "), sg.In(size=(170, 1), enable_events=True, key="-IMAGE_PATH-"), sg.Button("NEXT")],
     [sg.Text("Crops: "), sg.In(size=(170, 1), enable_events=True, key="-CROP-"), sg.Button("BACK")],
-    [sg.Text("Masks: "), sg.In(size=(170, 1), enable_events=True, key="-MASK-")],
+    [sg.Text("Masks: "), sg.In(size=(170, 1), enable_events=True, key="-MASK-"), sg.Button("SAVE")],
 ]
 
 # For now will only show the name of the file that was chosen
@@ -57,6 +57,15 @@ while True:
     # Folder name was filled in, make a list of files in the folder
     if event == "-CSV-":
         df = pd.read_csv ('calc_case_description_test_set_simple.csv')
+        if n_row <= 0:
+            window['BACK'].update(disabled=True)
+        elif n_row > 0 and n_row < (df.shape[0] -1):
+            window['BACK'].update(disabled=False)
+            window['NEXT'].update(disabled=False)
+        elif n_row >= (df.shape[0] -1):
+            window['NEXT'].update(disabled=True)  
+        
+        
         row = df.iloc[n_row]
         
         window['-CLASS-'].update(row[0])
@@ -78,7 +87,22 @@ while True:
             pass
 
     elif event == "NEXT":
+
+        row[0] = values['-CLASS-']
+        row[1] = values['-IMAGE_PATH-']
+        row[2] = values['-CROP-']
+        row[3] = values['-MASK-']
+        
         n_row = n_row +  1
+
+        if n_row <= 0:
+            window['BACK'].update(disabled=True)
+        elif n_row > 0 and n_row < (df.shape[0] -1):
+            window['BACK'].update(disabled=False)
+            window['NEXT'].update(disabled=False)
+        elif n_row >= (df.shape[0] -1):
+             window['NEXT'].update(disabled=True)  
+
         row = df.iloc[n_row]
         
         window['-CLASS-'].update(row[0])
@@ -100,7 +124,22 @@ while True:
             pass
 
     elif event == "BACK":
+
+        row[0] = values['-CLASS-']
+        row[1] = values['-IMAGE_PATH-']
+        row[2] = values['-CROP-']
+        row[3] = values['-MASK-']
+
         n_row = n_row -  1
+        
+        if n_row <= 0:
+            window['BACK'].update(disabled=True)
+        elif n_row > 0 and n_row < (df.shape[0] -1):
+            window['BACK'].update(disabled=False)
+            window['NEXT'].update(disabled=False)
+        elif n_row >=  (df.shape[0] -1):
+             window['NEXT'].update(disabled=True) 
+
         row = df.iloc[n_row]
         
         window['-CLASS-'].update(row[0])
@@ -120,6 +159,22 @@ while True:
             window["-MASK_IMG-"].update(filename=row[3])
         except:
             pass
+    
+    elif event == 'SAVE':
+
+        if n_row <= 0:
+            window['BACK'].update(disabled=True)
+        elif n_row > 0 and n_row < (df.shape[0] -1):
+            window['BACK'].update(disabled=False)
+            window['NEXT'].update(disabled=False)
+        elif n_row >= (df.shape[0] -1):
+             window['NEXT'].update(disabled=True)  
+
+        row[0] = values['-CLASS-']
+        row[1] = values['-IMAGE_PATH-']
+        row[2] = values['-CROP-']
+        row[3] = values['-MASK-']
+        df.to_csv('./test.csv', index=False)
 
 
         # window["-FILE LIST-"].update(fnames)
