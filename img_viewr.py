@@ -17,18 +17,18 @@ file_list_column = [
 # For now will only show the name of the file that was chosen
 image_column = [
     [sg.Text("Image")],
-    [sg.Image(key="-IMAGE-")]
+    [sg.Image(key="-IMAGE-", size=(100,100))]
 ]
 
 
 crops_column = [
     [sg.Text("Crop")],
-    [sg.Image(key="-CROP_IMG-")]
+    [sg.Image(key="-CROP_IMG-", size=(100,100))]
 ]
 
 masks_column = [
     [sg.Text("Mask")],
-    [sg.Image(key="-MASK_IMG-")]
+    [sg.Image(key="-MASK_IMG-", size=(100,100))]
 ]
 
 
